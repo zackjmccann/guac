@@ -3,3 +3,6 @@
 
 # Configure files
 *.json
+
+# Python venv
+guac-venv
