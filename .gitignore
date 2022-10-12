@@ -1,0 +1,5 @@
+# Secrets Files
+.env
+
+# Configure files
+*.json
