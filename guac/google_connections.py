@@ -22,11 +22,11 @@ def get_service_account(credentials_format='path'):
     """
     logger.info('Loading credentials...')
     if credentials_format == 'path':
-        logger.info(os.getenv('SERVICE_CREDENTIALS'))
-        return os.getenv('SERVICE_CREDENTIALS')
+        logger.info(os.getenv('GUAC_PIT'))
+        return os.getenv('GUAC_PIT')
 
     elif credentials_format == 'json':
-        with open(os.getenv('SERVICE_CREDENTIALS')) as service_account_credentials_file:
+        with open(os.getenv('GUAC_PIT'), encoding=None) as service_account_credentials_file:
             service_account_credentials = json.load(service_account_credentials_file)
             service_account_credentials_file.close()
             return service_account_credentials
@@ -36,9 +36,9 @@ def get_service_account(credentials_format='path'):
 
 def connect_reporting_api():
     """Connect to a Google Analytics Account via the Reporting API"""
-    logger.info('Calling to Google Analystics')
+    logger.info('Calling to Google Analystics...')
     scopes = ['https://www.googleapis.com/auth/analytics.readonly']
-    key_file_location = os.getenv('SERVICE_CREDENTIALS')
+    key_file_location = os.getenv('GUAC_PIT')
     credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes)
     analytics = build('analyticsreporting', 'v4', credentials=credentials)
 
