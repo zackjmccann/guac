@@ -1,0 +1,16 @@
+# Secrets Files
+.env
+
+# Configure files
+*.json
+
+# Python venv
+guac-venv
+
+# General
+.pytest_cache
+*_cache
+*.pyc
+.idea
+*.iml
+*.cpython-39.pyc
