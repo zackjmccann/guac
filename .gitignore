@@ -1,10 +1,10 @@
 # Files
-.env
-*.json
+*.env
 *.pyc
 *.iml
 *.cpython-39.pyc
-.DS_Store
+*.ipynb
+client_secrets.json
 
 # Directories
 .pytest_cache
@@ -12,3 +12,5 @@
 guac-venv
 .idea
 __pycache__
+.DS_Store
+guac-venv
