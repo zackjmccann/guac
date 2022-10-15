@@ -10,5 +10,6 @@ guac-venv
 # General
 .pytest_cache
 *_cache
-__pychache__
+*.pyc
 .idea
+*.iml
