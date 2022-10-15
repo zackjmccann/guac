@@ -26,7 +26,7 @@ def get_service_account(credentials_format='path'):
         return os.getenv('GUAC_PIT')
 
     elif credentials_format == 'json':
-        with open(os.getenv('GUAC_PIT'), encoding=None) as service_account_credentials_file:
+        with open(os.getenv('GUAC_PIT'), encoding='UTF-8') as service_account_credentials_file:
             service_account_credentials = json.load(service_account_credentials_file)
             service_account_credentials_file.close()
             return service_account_credentials
@@ -42,6 +42,7 @@ def connect_reporting_api():
     credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes)
     analytics = build('analyticsreporting', 'v4', credentials=credentials)
 
+    # pylint: disable=maybe-no-member
     return analytics.reports().batchGet(
         body={
             'reportRequests': [
@@ -53,3 +54,11 @@ def connect_reporting_api():
                 }]
         }
     ).execute()
+
+def get_analytics_reporting_resource():
+    """Returns an Analytics Reporting API V4 Resource object"""
+    logger.info('Calling to Google Analystics...')
+    scopes = ['https://www.googleapis.com/auth/analytics.readonly']
+    key_file_location = os.getenv('GUAC_PIT')
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes)
+    return build('analyticsreporting', 'v4', credentials=credentials)
