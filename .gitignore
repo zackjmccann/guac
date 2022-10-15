@@ -6,3 +6,9 @@
 
 # Python venv
 guac-venv
+
+# General
+.pytest_cache
+*_cache
+__pychache__
+.idea
