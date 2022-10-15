@@ -13,3 +13,4 @@ guac-venv
 *.pyc
 .idea
 *.iml
+*.cpython-39.pyc
