@@ -54,6 +54,6 @@ def test_convert_report_to_df():
 
     report_response = response['reports'][0]
 
-    report_df = convert_report_to_df(report_response)
+    report_df = convert_report_to_df(report_response=report_response, report_date=start_date)
 
     assert isinstance(report_df, pd.DataFrame)
