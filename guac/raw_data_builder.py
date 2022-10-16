@@ -50,7 +50,7 @@ def build_raw_data_df(report: dict) -> pd.DataFrame:
 
         reports.append(report_df)
 
-    raw_data_df = pd.concat(reports)
+    raw_data_df = pd.concat(reports).reset_index(drop=True)
     logger.success(f'Raw data compiled: {raw_data_df.info()}')
     return raw_data_df
 
