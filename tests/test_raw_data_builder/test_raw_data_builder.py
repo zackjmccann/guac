@@ -1,12 +1,13 @@
 import pandas as pd
 from guac.google_reporting_api import GoogleReportingAPI
+from guac.get_local_credentials import get_local_credentials
 from guac.raw_data_builder import build_raw_data_df, get_report_dates, convert_report_to_df
 
 
 def test_build_raw_data_df():
     """Test the 'build_raw_data_df' function of GUAC"""
 
-    all_web_site_data_view_id = '277792780'
+    all_web_site_data_view_id = get_local_credentials('ALL_WEBSITE_SITE_DATA_VIEW_ID')
     start_date = '2022-10-10'
     end_date = '2022-10-16'
     dimensions = [{'name': 'ga:country'} ]
@@ -38,7 +39,7 @@ def test_convert_report_to_df():
     """Test the 'convert_report_to_df' function of GUAC"""
     service = GoogleReportingAPI('GUAC_PIT', 'GOOGLE_REPORTING_API_SCOPES')
 
-    all_web_site_data_view_id = '277792780'
+    all_web_site_data_view_id = get_local_credentials('ALL_WEBSITE_SITE_DATA_VIEW_ID')
     start_date = '2022-10-10'
     end_date = '2022-10-16'
     dimensions = [{'name': 'ga:country'} ]
