@@ -43,7 +43,11 @@ def build_raw_data_df(report: dict) -> pd.DataFrame:
             metrics=metrics
             )
 
-        report_df = convert_report_to_df(report_response=report_response['reports'][0], report_date=date)
+        report_df = convert_report_to_df(
+            report_response=report_response['reports'][0],
+            report_date=date
+            )
+
         reports.append(report_df)
 
     raw_data_df = pd.concat(reports)
@@ -119,5 +123,5 @@ def convert_report_to_df(report_response: object, report_date: str) -> pd.DataFr
     ordered_headers = ['Date'] + df_headers
     report_df = df.loc[:, ordered_headers]
 
-    logger.success(f'{report_date} Report: {report_df.size()}')
+    logger.success(f'{report_date} Report: {str(report_df.size)}')
     return report_df
