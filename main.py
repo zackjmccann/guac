@@ -1,4 +1,3 @@
-from email.mime import image
 import sys
 from dotenv import load_dotenv
 from loguru import logger
