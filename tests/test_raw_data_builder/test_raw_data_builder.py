@@ -20,7 +20,7 @@ def test_build_raw_data_df():
         }
 
     raw_data_df = build_raw_data_df(report=report_request)
-    assert isinstance(raw_data_df[0], object)
+    assert isinstance(raw_data_df, pd.DataFrame)
     assert len(raw_data_df) > 1
 
 def test_get_report_dates():
