@@ -1,8 +1,10 @@
+from email.mime import image
 import sys
 from dotenv import load_dotenv
 from loguru import logger
 
 from guac.google_reporting_api import GoogleReportingAPI
+from guac.get_local_credentials import get_local_credentials
 from guac.raw_data_builder import build_raw_data_df
 
 # Logger and Environment Variables Configuration
@@ -18,7 +20,7 @@ if __name__ == '__main__':
     logger.info(f'Running process on {__name__}.')
     service = GoogleReportingAPI('GUAC_PIT', 'GOOGLE_REPORTING_API_SCOPES')
 
-    ALL_WEBSITE_SITE_DATA_VIEW_ID = '277792780'
+    VIEW = get_local_credentials('ALL_WEBSITE_SITE_DATA_VIEW_ID')
     START_DATE = '2022-10-10'
     END_DATE = '2022-10-16'
 
@@ -36,7 +38,7 @@ if __name__ == '__main__':
         ]
 
     report_request = {
-            'viewId': ALL_WEBSITE_SITE_DATA_VIEW_ID,
+            'viewId': VIEW,
             'dateRanges': [{'startDate': START_DATE, 'endDate': END_DATE}],
             'dimensions': dimensions,
             'metrics': metrics
