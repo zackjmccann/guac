@@ -1,4 +1,5 @@
 from guac.google_reporting_api import GoogleReportingAPI
+from guac.get_local_credentials import get_local_credentials
 
 def test_google_reporting_api_method_connect():
     """Test the 'connect' method of the GoogleReportingAPI Class"""
@@ -7,7 +8,7 @@ def test_google_reporting_api_method_connect():
 
 def test_google_reporting_api_method_get_report():
     """Test the 'get_report' method of the GoogleReportingAPI Class"""
-    all_web_site_data_view_id = '277792780'
+    all_web_site_data_view_id = get_local_credentials('ALL_WEBSITE_SITE_DATA_VIEW_ID')
     start_date = '2022-10-15'
     end_date = '2022-10-15'
     ga_service = GoogleReportingAPI('GUAC_PIT', 'GOOGLE_REPORTING_API_SCOPES')
