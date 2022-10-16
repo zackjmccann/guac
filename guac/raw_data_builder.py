@@ -35,15 +35,20 @@ def build_raw_data_df(report: dict) -> pd.DataFrame:
     reports = list()
 
     for date in report_dates:
-        reports.append(service.get_report(
+        report_response = service.get_report(
             view_id=view_id,
             start_date=date,
             end_date=date,
             dimensions=dimensions,
             metrics=metrics
-            ))
+            )
 
-    return reports
+        report_df = convert_report_to_df(report_response=report_response['reports'][0], report_date=date)
+        reports.append(report_df)
+
+    raw_data_df = pd.concat(reports)
+    logger.success(f'Raw data compiled: {raw_data_df.info()}')
+    return raw_data_df
 
 
 def get_report_dates(report_date_range: dict) -> list:
@@ -79,7 +84,7 @@ def get_report_dates(report_date_range: dict) -> list:
 
     return report_dates
 
-def convert_report_to_df(report_response: object) -> pd.DataFrame:
+def convert_report_to_df(report_response: object, report_date: str) -> pd.DataFrame:
     """
     Convert the Google Reporting API Report Response object
     to a pd.DataFrame
@@ -90,7 +95,6 @@ def convert_report_to_df(report_response: object) -> pd.DataFrame:
     column_header_metric_header = column_header['metricHeader']
     column_header_metric_header_entries = column_header_metric_header['metricHeaderEntries']
     data = report_response["data"]
-    data_rows = data['rows']
 
     # Build DataFrame
     raw_df_headers = column_header_dimensions + \
@@ -99,12 +103,21 @@ def convert_report_to_df(report_response: object) -> pd.DataFrame:
 
     df_rows = list()
 
+    if 'rows' in data:
+        data_rows = data['rows']
+    else:
+        return pd.DataFrame() # Return empty DF for days that report no data
+
     for row in data_rows:
         dimensions = row['dimensions']
         for metrics in row['metrics']:
             df_rows.append(dimensions + metrics['values'])
-    report_df = pd.DataFrame
-    df = pd.DataFrame(data=df_rows, columns=df_headers)
-    report_df = df
 
+    df = pd.DataFrame(data=df_rows, columns=df_headers)
+
+    df['Date'] = report_date
+    ordered_headers = ['Date'] + df_headers
+    report_df = df.loc[:, ordered_headers]
+
+    logger.success(f'{report_date} Report: {report_df.size()}')
     return report_df
